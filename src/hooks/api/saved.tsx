@@ -12,7 +12,7 @@ const mapSaved = (result?: SavedApiResult): Saved[] | undefined => {
   return result?.data?.children?.map(
     (child) =>
       ({
-        title: child?.data?.title,
+        title: child?.data?.title ?? 'Title not found ...',
         src: `https://www.reddit.com${child?.data?.permalink}`,
         subreddit: child?.data?.subreddit_name_prefixed,
         thumbnail: {
@@ -37,6 +37,7 @@ const useGetRedditSaved = (user: User['username']): ApiResult<Saved[]> => {
     // @ts-ignore
     `https://oauth.reddit.com/user/${user}/saved?limit=1200`,
     fetcher,
+    { revalidateOnFocus: false },
   );
 
   return {

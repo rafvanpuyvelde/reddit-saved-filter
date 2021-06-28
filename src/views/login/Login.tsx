@@ -1,5 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import { Routes } from '../../types/routes/routeTypes';
 
 const Login: React.FC = () => {
   const redditOauthHandler = () => {
@@ -13,6 +15,8 @@ const Login: React.FC = () => {
 
     window.location.href = oauthUrl;
   };
+
+  if (sessionStorage.getItem('token')) return <Redirect to={Routes.ROOT} />;
 
   return (
     <p>
