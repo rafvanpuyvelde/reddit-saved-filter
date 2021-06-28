@@ -1,3 +1,14 @@
-export const fetcher = (...args: unknown[]): Promise<unknown> =>
+const fetcher = async (...args: unknown[]): Promise<unknown> => {
   // @ts-ignore
-  fetch(...args).then((res) => res.json());
+  const res = await fetch(...args, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      'User-Agent': 'SavedFilter/0.1 by u/SaltySpartan88',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+
+  return res.json();
+};
+
+export default fetcher;
