@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
 
 import useGetRedditSaved from '../../hooks/api/saved';
+import { getUserName } from '../../util/api/apiUtil';
 import groupBy from '../../util/helpers';
 
 const Search: React.FC = () => {
-  const { loading, error, data: saved } = useGetRedditSaved('SaltySpartan88');
+  const username = getUserName();
+
+  const { loading, error, data: saved } = useGetRedditSaved(username);
 
   const filteredItems = useMemo(
     () => Array.from(groupBy(saved, (saved) => saved.subreddit)),

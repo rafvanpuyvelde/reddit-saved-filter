@@ -1,4 +1,4 @@
-const fetcher = async (...args: unknown[]): Promise<unknown> => {
+export const fetcher = async (...args: unknown[]): Promise<unknown> => {
   // @ts-ignore
   const res = await fetch(...args, {
     headers: {
@@ -11,6 +11,10 @@ const fetcher = async (...args: unknown[]): Promise<unknown> => {
   if (res.status === 401) localStorage.removeItem('token');
 
   return res.json();
+};
+
+export const getUserName = (): string | undefined => {
+  return sessionStorage.getItem('username')?.split('/').reverse()[0];
 };
 
 export default fetcher;

@@ -4,6 +4,10 @@ export interface ApiResult<T> {
   data: T;
 }
 
+export interface ApiRequestOptions {
+  skip?: boolean;
+}
+
 export interface User {
   username: string;
 }

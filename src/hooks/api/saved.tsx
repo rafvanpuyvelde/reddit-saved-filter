@@ -1,7 +1,8 @@
 import useSWR from 'swr';
-import fetcher from '../../util/api/apiUtil';
+import { fetcher } from '../../util/api/apiUtil';
 
 import type {
+  ApiRequestOptions,
   ApiResult,
   Saved,
   SavedApiResult,
@@ -32,10 +33,15 @@ const mapSaved = (result?: SavedApiResult): Saved[] | undefined => {
  * @param user The username
  * @returns The saved posts
  */
-const useGetRedditSaved = (user: User['username']): ApiResult<Saved[]> => {
+const useGetRedditSaved = (
+  user?: User['username'],
+  options?: ApiRequestOptions,
+): ApiResult<Saved[]> => {
   const { data, error } = useSWR<SavedApiResult, unknown>(
     // @ts-ignore
-    `https://oauth.reddit.com/user/${user}/saved?limit=1200`,
+    !options?.skip
+      ? `https://oauth.reddit.com/user/${user}/saved?limit=1200`
+      : null,
     fetcher,
     { revalidateOnFocus: false },
   );

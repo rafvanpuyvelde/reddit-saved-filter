@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import { Routes } from '../../types/routes/routeTypes';
 
@@ -9,6 +9,8 @@ enum RouteParams {
 }
 
 const Authorize: React.FC = () => {
+  const history = useHistory();
+
   const params = new URL(document.location.href).searchParams;
 
   const stateParam = useMemo(() => params.get(RouteParams.STATE), [params]);
@@ -39,18 +41,40 @@ const Authorize: React.FC = () => {
       },
     });
 
-    const token = await response.json();
+    const data = await response.json();
 
-    if (token?.access_token) {
+    if (data?.access_token) {
       sessionStorage.removeItem('identifier');
-      sessionStorage.setItem('token', token?.access_token);
+      sessionStorage.setItem('token', data?.access_token);
     }
   }, [codeParam]);
 
+  const getUserIdentity = async () => {
+    const response = await fetch('https://oauth.reddit.com/api/v1/me', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        'User-Agent': 'SavedFilter/0.1 by u/SaltySpartan88',
+      },
+    });
+
+    const data = await response.json();
+
+    if (data?.subreddit?.display_name_prefixed) {
+      sessionStorage.setItem(
+        'username',
+        data?.subreddit?.display_name_prefixed,
+      );
+    }
+  };
+
   useEffect(() => {
-    if (hasValidAuthParams) getAuthToken();
-    return () => {};
-  }, [getAuthToken, hasValidAuthParams]);
+    if (hasValidAuthParams) {
+      getAuthToken().then(() =>
+        getUserIdentity().then(() => history.replace(Routes.ROOT)),
+      );
+    }
+  }, [getAuthToken, hasValidAuthParams, history]);
 
   if (!hasValidAuthParams) {
     sessionStorage.removeItem('identifier');
