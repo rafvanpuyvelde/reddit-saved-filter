@@ -29,7 +29,7 @@ const Authorize: React.FC = () => {
 
     formData.append('grant_type', 'authorization_code');
     formData.append('code', codeParam);
-    formData.append('redirect_uri', 'http://localhost:3001/authorize_callback');
+    formData.append('redirect_uri', 'http://localhost:3000/authorize_callback');
 
     const response = await fetch('https://www.reddit.com/api/v1/access_token', {
       method: 'POST',
