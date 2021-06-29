@@ -1,8 +1,13 @@
 import React, { useMemo } from 'react';
+import styled from 'styled-components';
 
 import useGetRedditSaved from '../../hooks/api/saved';
 import { getUserName } from '../../util/api/apiUtil';
 import groupBy from '../../util/helpers';
+
+const Img = styled.img`
+  border: red;
+`;
 
 const Search: React.FC = () => {
   const username = getUserName();
@@ -27,6 +32,14 @@ const Search: React.FC = () => {
               <li key={item.title}>
                 <a href={item.src} target="_blank" rel="noreferrer">
                   {item.title}
+                  <div>
+                    <Img
+                      src={item?.thumbnail?.src}
+                      alt="post thumbnail"
+                      height={50}
+                      width={50}
+                    />
+                  </div>
                 </a>
               </li>
             ))}

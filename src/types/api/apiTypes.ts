@@ -27,17 +27,16 @@ export interface SavedApiResult {
   };
 }
 
-// title: data.children.data.title
-
 export interface Saved {
+  uuid: string;
   title: string;
-  subreddit?: string; // subreddit_name_prefixed
+  subreddit?: string;
   thumbnail?: Thumbnail;
-  src: string; // permalink
+  src: string;
 }
 
 export interface Thumbnail {
-  height: number; // thumbnail_height
+  height: number;
   width: number;
-  src: string; // thumbnail
+  src: string;
 }

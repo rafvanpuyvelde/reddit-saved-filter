@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { v4 as uuid } from 'uuid';
 import { fetcher } from '../../util/api/apiUtil';
 
 import type {
@@ -13,6 +14,7 @@ const mapSaved = (result?: SavedApiResult): Saved[] | undefined => {
   return result?.data?.children?.map(
     (child) =>
       ({
+        uuid: uuid(),
         title: child?.data?.title ?? 'Title not found ...',
         src: `https://www.reddit.com${child?.data?.permalink}`,
         subreddit: child?.data?.subreddit_name_prefixed,
