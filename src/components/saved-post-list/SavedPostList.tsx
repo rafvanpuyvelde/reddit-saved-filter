@@ -29,7 +29,7 @@ const PostWrapper = styled.li`
 `;
 
 export interface SavedPostListProps {
-  posts?: { [subreddit: string]: Saved[] };
+  posts?: [string, Saved[]][];
 }
 
 const SavedPostList: React.FC<SavedPostListProps> = ({ posts }) => {
@@ -37,7 +37,7 @@ const SavedPostList: React.FC<SavedPostListProps> = ({ posts }) => {
     <>
       {posts && (
         <Wrapper>
-          {Object.entries(posts)?.map(([subreddit, posts]) => (
+          {posts?.map(([subreddit, posts]) => (
             <SubredditWrapper key={subreddit}>
               <Subreddit>{subreddit}</Subreddit>
               <ul>

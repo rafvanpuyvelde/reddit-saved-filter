@@ -6,7 +6,7 @@ const Wrapper = styled.a`
   align-items: center;
   background: #fafafa;
   border-radius: 10px;
-  padding: 5px 0 5px 8px;
+  padding: 5px 25px 5px 8px;
   text-decoration: none;
 `;
 
@@ -36,7 +36,7 @@ export type PostProps = SavedPost;
 
 const Post: React.FC<PostProps> = ({ image, text, src }) => {
   return (
-    <Wrapper href={src}>
+    <Wrapper href={src} target="_blank" rel="noreferrer">
       <Image src={image} alt="post thumbnail" />
       <Text>{text}</Text>
     </Wrapper>

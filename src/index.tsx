@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Switch, Link, BrowserRouter as ReactRouter } from 'react-router-dom';
+import { Switch, BrowserRouter as ReactRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import './index.scss';
@@ -13,30 +13,17 @@ import { RouteGuards } from './types/routes/routeTypes';
 ReactDOM.render(
   <React.StrictMode>
     <ReactRouter>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/authorize_callback">Authorize</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        <Switch>
-          <GuardedRoute guard={RouteGuards.AUTHENTICATED} exact path="/">
-            <Search />
-          </GuardedRoute>
-          <GuardedRoute path="/login">
-            <Login />
-          </GuardedRoute>
-          <GuardedRoute path="/authorize_callback">
-            <Authorize />
-          </GuardedRoute>
-        </Switch>
-      </div>
+      <Switch>
+        <GuardedRoute guard={RouteGuards.AUTHENTICATED} exact path="/">
+          <Search />
+        </GuardedRoute>
+        <GuardedRoute path="/login">
+          <Login />
+        </GuardedRoute>
+        <GuardedRoute path="/authorize_callback">
+          <Authorize />
+        </GuardedRoute>
+      </Switch>
     </ReactRouter>
   </React.StrictMode>,
   document.getElementById('root'),

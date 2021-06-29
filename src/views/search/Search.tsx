@@ -1,12 +1,23 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
+import SavedPostList from '../../components/saved-post-list/SavedPostList';
 import useGetRedditSaved from '../../hooks/api/saved';
+import { Saved } from '../../types/api/apiTypes';
 import { getUserName } from '../../util/api/apiUtil';
 import groupBy from '../../util/helpers';
 
-const Img = styled.img`
-  border: red;
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-items: center;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  max-width: 285px;
 `;
 
 const Search: React.FC = () => {
@@ -15,7 +26,10 @@ const Search: React.FC = () => {
   const { loading, error, data: saved } = useGetRedditSaved(username);
 
   const filteredItems = useMemo(
-    () => Array.from(groupBy(saved, (saved) => saved.subreddit)),
+    () =>
+      Array.from(groupBy(saved, (saved) => saved.subreddit)).filter(
+        ([subreddit]) => subreddit !== undefined,
+      ) as [string, Saved[]][],
     [saved],
   );
 
@@ -23,30 +37,11 @@ const Search: React.FC = () => {
   if (error) return <p>{error as string}</p>;
 
   return (
-    <ul>
-      {filteredItems?.map(([subreddit, items]) => (
-        <li key={subreddit}>
-          <p>{subreddit}</p>
-          <ul>
-            {items?.map((item) => (
-              <li key={item.title}>
-                <a href={item.src} target="_blank" rel="noreferrer">
-                  {item.title}
-                  <div>
-                    <Img
-                      src={item?.thumbnail?.src}
-                      alt="post thumbnail"
-                      height={50}
-                      width={50}
-                    />
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
+    <Wrapper>
+      <Container>
+        <SavedPostList posts={filteredItems} />
+      </Container>
+    </Wrapper>
   );
 };
 

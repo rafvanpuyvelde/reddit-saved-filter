@@ -24,7 +24,11 @@ const mapSaved = (result?: SavedApiResult): Saved[] | undefined => {
             10,
           ),
           width: parseInt(child?.data?.thumbnail_width?.toString() ?? '0', 10),
-          src: child?.data?.thumbnail,
+          src:
+            child?.data?.thumbnail === 'default' ||
+            child?.data?.thumbnail === 'self'
+              ? 'https://picsum.photos/50'
+              : child?.data?.thumbnail ?? 'https://picsum.photos/50',
         },
       } as Saved),
   );
