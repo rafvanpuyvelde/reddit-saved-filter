@@ -29,9 +29,15 @@ const Authorize: React.FC = () => {
 
     if (!codeParam) return undefined;
 
+    const redirectUri = `${
+      process.env.NODE_ENV !== 'development'
+        ? process.env.REACT_APP_BASE_APP_URL
+        : 'http://localhost:3000'
+    }/authorize_callback`;
+
     formData.append('grant_type', 'authorization_code');
     formData.append('code', codeParam);
-    formData.append('redirect_uri', 'http://localhost:3000/authorize_callback');
+    formData.append('redirect_uri', redirectUri);
 
     const response = await fetch('https://www.reddit.com/api/v1/access_token', {
       method: 'POST',
