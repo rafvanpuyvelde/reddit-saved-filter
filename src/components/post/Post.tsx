@@ -24,6 +24,7 @@ const Image = styled.img`
   border-radius: 10px;
   height: 45px;
   width: 45px;
+  object-fit: cover;
 `;
 
 export interface SavedPost {

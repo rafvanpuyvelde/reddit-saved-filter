@@ -7,7 +7,7 @@ import Post from '../post/Post';
 
 const Wrapper = styled.ul`
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
 `;
 
 const Subreddit = styled(Heading)`
@@ -15,10 +15,15 @@ const Subreddit = styled(Heading)`
 `;
 
 const SubredditWrapper = styled.li`
+  min-width: 100%;
   margin-bottom: 37px;
   &:last-of-type {
     margin-bottom: 0;
   }
+`;
+
+const PostList = styled.ul`
+  min-width: 100%;
 `;
 
 const PostWrapper = styled.li`
@@ -40,7 +45,7 @@ const SavedPostList: React.FC<SavedPostListProps> = ({ posts }) => {
           {posts?.map(([subreddit, posts]) => (
             <SubredditWrapper key={subreddit}>
               <Subreddit>{subreddit}</Subreddit>
-              <ul>
+              <PostList>
                 {posts?.map((post) => (
                   <PostWrapper key={post.uuid}>
                     <Post
@@ -50,7 +55,7 @@ const SavedPostList: React.FC<SavedPostListProps> = ({ posts }) => {
                     />
                   </PostWrapper>
                 ))}
-              </ul>
+              </PostList>
             </SubredditWrapper>
           ))}
         </Wrapper>

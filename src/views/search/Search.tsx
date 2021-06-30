@@ -1,24 +1,11 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 
+import AppLayout from '../../components/app-layout/AppLayout';
 import SavedPostList from '../../components/saved-post-list/SavedPostList';
 import useGetRedditSaved from '../../hooks/api/saved';
 import { Saved } from '../../types/api/apiTypes';
 import { getUserName } from '../../util/api/apiUtil';
 import groupBy from '../../util/helpers';
-
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-items: center;
-  align-items: center;
-`;
-
-const Container = styled.div`
-  max-width: 285px;
-`;
 
 const Search: React.FC = () => {
   const username = getUserName();
@@ -37,11 +24,9 @@ const Search: React.FC = () => {
   if (error) return <p>{error as string}</p>;
 
   return (
-    <Wrapper>
-      <Container>
-        <SavedPostList posts={filteredItems} />
-      </Container>
-    </Wrapper>
+    <AppLayout>
+      <SavedPostList posts={filteredItems} />
+    </AppLayout>
   );
 };
 

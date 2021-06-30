@@ -2,6 +2,7 @@ import React from 'react';
 import type { Story } from '@storybook/react/types-6-0';
 
 import SavedPostList, { SavedPostListProps } from './SavedPostList';
+import AppLayout from '../app-layout/AppLayout';
 
 export default {
   title: 'Components/SavedPostList',
@@ -94,7 +95,11 @@ const defaultArgs: SavedPostListProps = {
   ],
 };
 
-const Template: Story = (props) => <SavedPostList {...props} />;
+const Template: Story = (props) => (
+  <AppLayout>
+    <SavedPostList {...props} />
+  </AppLayout>
+);
 
 export const Default = Template.bind({});
 Default.args = { ...defaultArgs };
