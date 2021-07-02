@@ -20,7 +20,7 @@ const Authorize: React.FC = () => {
     () =>
       stateParam &&
       codeParam &&
-      stateParam === sessionStorage.getItem('identifier'),
+      stateParam === localStorage.getItem('identifier'),
     [codeParam, stateParam],
   );
 
@@ -50,8 +50,8 @@ const Authorize: React.FC = () => {
     const data = await response.json();
 
     if (data?.access_token) {
-      sessionStorage.removeItem('identifier');
-      sessionStorage.setItem('token', data?.access_token);
+      localStorage.removeItem('identifier');
+      localStorage.setItem('token', data?.access_token);
     }
   }, [codeParam]);
 
@@ -59,7 +59,7 @@ const Authorize: React.FC = () => {
     const response = await fetch('https://oauth.reddit.com/api/v1/me', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'User-Agent': 'SavedFilter/0.1 by u/SaltySpartan88',
       },
     });
@@ -67,10 +67,7 @@ const Authorize: React.FC = () => {
     const data = await response.json();
 
     if (data?.subreddit?.display_name_prefixed) {
-      sessionStorage.setItem(
-        'username',
-        data?.subreddit?.display_name_prefixed,
-      );
+      localStorage.setItem('username', data?.subreddit?.display_name_prefixed);
     }
   };
 
@@ -83,8 +80,8 @@ const Authorize: React.FC = () => {
   }, [getAuthToken, hasValidAuthParams, history]);
 
   if (!hasValidAuthParams) {
-    sessionStorage.removeItem('identifier');
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('identifier');
+    localStorage.removeItem('token');
   }
 
   return <Redirect to={Routes.ROOT} />;

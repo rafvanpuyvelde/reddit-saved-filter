@@ -7,7 +7,7 @@ const Login: React.FC = () => {
   const redditOauthHandler = () => {
     const identifier = uuid();
 
-    sessionStorage.setItem('identifier', identifier);
+    localStorage.setItem('identifier', identifier);
 
     const clientId = 'j3sx1ueHcjxOlg';
     const redirectUri = `${window.location.origin}/authorize_callback`;
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
     window.location.href = oauthUrl;
   };
 
-  if (sessionStorage.getItem('token')) return <Redirect to={Routes.ROOT} />;
+  if (localStorage.getItem('token')) return <Redirect to={Routes.ROOT} />;
 
   return (
     <p>

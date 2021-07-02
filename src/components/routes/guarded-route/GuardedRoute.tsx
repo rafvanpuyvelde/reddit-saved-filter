@@ -13,7 +13,7 @@ const GuardedRoute: React.FC<GuardedRouteProps> = ({
   ...rest
 }) => {
   const getRedirectPath = (currentPath: string): string | null => {
-    const authenticated = sessionStorage.getItem('token');
+    const authenticated = localStorage.getItem('token');
 
     const isAuthenticated = authenticated !== null && authenticated !== '';
     const isAuthPath =
