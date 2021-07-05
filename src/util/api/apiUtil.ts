@@ -8,7 +8,7 @@ export const fetcher = async (...args: unknown[]): Promise<unknown> => {
     },
   });
 
-  // if (res.status === 401) localStorage.removeItem('token');
+  if (res.status === 401) localStorage.removeItem('token');
 
   return res.json();
 };
